@@ -1,0 +1,65 @@
+@use "../../styles/variables";
+
+.singleBook {
+  padding-top: 3rem;
+  padding-bottom: 6rem;
+  &__back {
+    position: absolute;
+    top: -2rem;
+    right: 0;
+    padding: 0.5em 1rem;
+    color: white;
+    background: variables.$primary;
+    display: block;
+    font-size: 0.9rem;
+    border-radius: variables.$mobileBorderRadius;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    @media (min-width: 680px) {
+      flex-direction: row;
+    }
+  }
+  &__img__block {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    min-height: 400px;
+    justify-content: center;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    background: white;
+    border-radius: variables.$pcBorderRadius;
+    img {
+      width: 100%;
+      transition: 0.1s;
+      max-width: 400px;
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+    @media (min-width: 680px) {
+      width: 50%;
+    }
+  }
+  &__categories {
+    letter-spacing: 1px;
+  }
+  &__info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    @media (min-width: 680px) {
+      width: 50%;
+    }
+  }
+}

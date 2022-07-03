@@ -1,0 +1,28 @@
+@use "../../styles/variables";
+
+.bookList {
+  padding: 2rem 0;
+  &__result {
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    transition: 0.1s;
+  }
+  &__load__more {
+    margin: 0 auto;
+    border: none;
+    padding: 0.5em 1rem;
+    color: white;
+    background: variables.$primary;
+    display: block;
+    font-size: 1.5rem;
+    border-radius: variables.$mobileBorderRadius;
+    margin-top: 2rem;
+  }
+}
