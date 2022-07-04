@@ -1,7 +1,11 @@
 @use "../../styles/variables";
+@use "../../styles/mixins";
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 .bookList {
   padding: 2rem 0;
+  position: relative;
+  min-height: 35vh;
   &__result {
     font-weight: normal;
     text-align: center;
@@ -24,5 +28,26 @@
     font-size: 1.5rem;
     border-radius: variables.$mobileBorderRadius;
     margin-top: 2rem;
+    box-shadow: 0px 1px 2px 2px rgba(34, 60, 80, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s;
+    &:hover {
+      transform: scale(1.05);
+    }
+    &:disabled {
+      background: rgb(92, 92, 92);
+      opacity: 0.3;
+    }
+  }
+  &__noBooks {
+    @include mixins.font(50, 30);
+    opacity: 0.2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 8px;
+    text-align: center;
+    font-family: "Bebas Neue", cursive;
   }
 }

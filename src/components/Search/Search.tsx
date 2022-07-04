@@ -1,11 +1,12 @@
 import s from "./Search.module.scss"
 import { BsSearch } from "react-icons/bs"
 import { ImBook } from "react-icons/im"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useRef, useState } from "react"
 import { SelectInput } from "../Common/SelectInput/SelectInput"
 import { CONSTANTS } from "../../utils/constants"
 import { useTypedDispatch, useTypedSelector } from "../../store/store"
-import { searchTextChanged } from "../../store/slices/booksSlice"
+import { getBookList, newQuery, searchTextChanged } from "../../store/slices/booksSlice"
+import { Loader } from "../Common/Loader/Loader"
 
 const CATEGORIES = [
   "all",
@@ -16,14 +17,20 @@ const CATEGORIES = [
   "medical",
   "poetry",
 ]
+
 const SORT = ["relevance", "newest"]
+
 export const Search = () => {
-  const { searchText } = useTypedSelector(state => state.books)
+  const loading = useTypedSelector(state => state.books.loading)
+  const { searchText } = useTypedSelector(state => state.books.form)
   const dispatcher = useTypedDispatch()
-  
-  const getBooks = (e: FormEvent) => {
+
+  const getBooks = async (e: FormEvent) => {
     e.preventDefault()
-    console.log("letsgo")
+    dispatcher(newQuery())
+    await dispatcher(getBookList(0))
+      .unwrap()
+      .catch(err => console.log(err))
   }
 
   const searchTyping = (e: ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +42,7 @@ export const Search = () => {
       <div className='container'>
         <div className={s.search__wrapper}>
           <h1 className={s.search__title}>Book search</h1>
-          <form className={s.search__form} onSubmit={e => getBooks(e)}>
+          <form className={s.search__form} onSubmit={getBooks}>
             <div className={s.search__form__input_wrapper}>
               <ImBook className={s.search__form__book_icon} />
               <input
@@ -49,6 +56,7 @@ export const Search = () => {
                 <BsSearch color='white' />
               </button>
             </div>
+            <Loader visible={loading} />
             <div className={s.search__form__options}>
               {/** я решил использовать кастомные селекты потому что обычные */}
               {/** нельзя стилизовать, заодно решил показать, что могу такое делать :) */}

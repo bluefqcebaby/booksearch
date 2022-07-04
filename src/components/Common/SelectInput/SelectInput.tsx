@@ -15,7 +15,7 @@ export const SelectInput: FC<{ title?: string; options: string[]; type: string }
   type,
 }) => {
   const [selectInputClasses, setSelectInputClasses] = useState(baseClass)
-  const { filter, sort } = useTypedSelector(state => state.books)
+  const { filter, sort } = useTypedSelector(state => state.books.form)
   const dispatcher = useTypedDispatch()
   const select = type === CONSTANTS.filter ? filter : sort
   //закрытие селекта при клике за пределы элемента

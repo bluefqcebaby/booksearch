@@ -1,6 +1,6 @@
 import { Book } from "./book"
 
-export interface BookList {
+export interface BookResponse {
   totalItems: number
-  items: Book[]
+  items?: Book[]
 }

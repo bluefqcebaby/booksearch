@@ -8,7 +8,7 @@ interface BookInfo {
   authors: string[]
   description: string
   categories: string[]
-  imageLinks: imgLinks[]
+  imageLinks?: imgLinks
   language: string
 }
 interface imgLinks {
