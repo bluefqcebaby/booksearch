@@ -19,7 +19,9 @@
     border-radius: variables.$mobileBorderRadius;
     padding: 0.5rem 1rem;
     border: 0.2rem solid variables.$primary;
-    cursor: pointer;
+    @media (min-width: 1024px) {
+      cursor: pointer; // Чтобы не появлялось синей обводки при клике на элемент с телефона
+    }
   }
   &__options {
     position: absolute;
@@ -62,7 +64,6 @@
     margin: 0 auto;
     transition: background 0.1s;
     border-radius: variables.$mobileBorderRadius;
-    // cursor: pointer;
     border: 1px solid variables.$primary;
     &:hover,
     &__checked {
@@ -71,6 +72,9 @@
     }
     & + & {
       margin-top: 0.3rem;
+    }
+    @media (min-width: 1024px) {
+      cursor: pointer;
     }
   }
   &__chosen {

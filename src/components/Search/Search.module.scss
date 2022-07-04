@@ -1,20 +1,19 @@
 @use "../../styles/mixins";
 @use "../../styles/variables";
 
-$min-height: 65vh;
+$min-height: 500px;
 
 .search {
   background: linear-gradient(
     135deg,
-    rgb(152, 207, 195),
+    rgb(83, 215, 186),
     variables.$primary-second,
-    rgb(0, 164, 126),
-    rgb(1, 194, 136)
+    rgb(0, 164, 101),
+    rgb(18, 225, 159)
   );
   background-size: 400% 400%;
-  animation: backgroundAnimation 15s ease infinite;
+  animation: backgroundAnimation 12s ease-out infinite;
   background-position: 0% 100%;
-  height: $min-height;
   &__wrapper {
     display: flex;
     align-items: center;

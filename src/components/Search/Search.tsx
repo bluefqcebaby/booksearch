@@ -1,11 +1,11 @@
 import s from "./Search.module.scss"
 import { BsSearch } from "react-icons/bs"
 import { ImBook } from "react-icons/im"
-import { ChangeEvent, FormEvent, useRef, useState } from "react"
+import { ChangeEvent, FormEvent } from "react"
 import { SelectInput } from "../Common/SelectInput/SelectInput"
 import { CONSTANTS } from "../../utils/constants"
 import { useTypedDispatch, useTypedSelector } from "../../store/store"
-import { getBookList, newQuery, searchTextChanged } from "../../store/slices/booksSlice"
+import { getBookList, clearBooks, searchTextChanged } from "../../store/slices/booksSlice"
 import { Loader } from "../Common/Loader/Loader"
 
 const CATEGORIES = [
@@ -27,8 +27,8 @@ export const Search = () => {
 
   const getBooks = async (e: FormEvent) => {
     e.preventDefault()
-    dispatcher(newQuery())
-    await dispatcher(getBookList(0))
+    dispatcher(clearBooks())
+    await dispatcher(getBookList({ startIndex: 0 }))
       .unwrap()
       .catch(err => console.log(err))
   }

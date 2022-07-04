@@ -2,8 +2,9 @@ import s from "./BookList.module.scss"
 import { BookItem } from "./BookItem/BookItem"
 import { useTypedDispatch, useTypedSelector } from "../../store/store"
 import bookCover from "../../img/bookCover.jpg"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getBookList } from "../../store/slices/booksSlice"
+import { CONSTANTS } from "../../utils/constants"
 
 // const daun = {
 //   name: "Nikita",
@@ -12,7 +13,7 @@ import { getBookList } from "../../store/slices/booksSlice"
 // }
 
 export const BookList = () => {
-  const { booksItems: books, totalItems } = useTypedSelector(
+  const { bookItems: books, totalItems } = useTypedSelector(
     state => state.books.bookListData
   )
   const searchPressed = useTypedSelector(state => state.books.searchPressed)
@@ -22,9 +23,24 @@ export const BookList = () => {
   const startIndex = useRef(0)
   const loadMoreBooks = async () => {
     setBtnDisabled(true)
-    await dispatcher(getBookList(startIndex.current))
+    if (books.length + CONSTANTS.numberOfResults > totalItems) {
+      const numOfRes = totalItems - books.length
+      await dispatcher(
+        getBookList({ startIndex: startIndex.current, numberOfResults: numOfRes })
+      )
+      return
+    }
+    await dispatcher(getBookList({ startIndex: startIndex.current }))
     setBtnDisabled(false)
   }
+  useEffect(() => {
+    console.log(books.length)
+    if (books.length >= totalItems && books.length !== 0) {
+      setBtnDisabled(true)
+    } else {
+      setBtnDisabled(false)
+    }
+  }, [books])
   if (!searchPressed) {
     return (
       <section className={s.bookList}>
@@ -37,7 +53,7 @@ export const BookList = () => {
     startIndex.current = books.length
     const bookItems = books.map(elem => (
       <BookItem
-        key={elem.id}
+        key={elem.etag}
         title={elem.volumeInfo.title}
         thumbnail={elem.volumeInfo?.imageLinks?.thumbnail ?? bookCover}
         authors={elem.volumeInfo.authors}
@@ -60,7 +76,11 @@ export const BookList = () => {
               onClick={loadMoreBooks}
               disabled={btnDisabled}
             >
-              {btnDisabled ? "Loading..." : "Load more"}
+              {loading
+                ? "Loading..."
+                : btnDisabled
+                ? "Thats all books i have😭"
+                : "Load more"}
             </button>
           )}
         </div>

@@ -5,7 +5,7 @@
 .bookList {
   padding: 2rem 0;
   position: relative;
-  min-height: 35vh;
+  min-height: 400px;
   &__result {
     font-weight: normal;
     text-align: center;
@@ -35,8 +35,13 @@
       transform: scale(1.05);
     }
     &:disabled {
-      background: rgb(92, 92, 92);
-      opacity: 0.3;
+      background: lighten(variables.$primary, 5%);
+      opacity: 0.9;
+      box-shadow: none;
+      cursor: not-allowed;
+      &:hover {
+        transform: none;
+      }
     }
   }
   &__noBooks {

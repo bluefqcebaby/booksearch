@@ -1,3 +1,4 @@
+import { CONSTANTS } from "../utils/constants"
 import { BookResponse } from "./../models/booksList"
 import { bookListRequest } from "./instances"
 
@@ -7,7 +8,7 @@ export const BooksAPI = {
     startIndex: number,
     sort: string,
     filter: string,
-    numberOfResults: number = 30
+    numberOfResults: number = CONSTANTS.numberOfResults
   ) {
     const filterText = filter === "all" ? "" : `+subject:${filter}`
     return bookListRequest.get<BookResponse>(

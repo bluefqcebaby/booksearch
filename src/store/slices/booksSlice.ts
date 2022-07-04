@@ -11,7 +11,7 @@ import { Book } from "../../models/book"
 interface booksInterface {
   bookListData: {
     totalItems: number
-    booksItems: Book[]
+    bookItems: Book[]
   }
   searchPressed: boolean
   loading: boolean
@@ -32,7 +32,7 @@ const initialState: booksInterface = {
   error: "",
   loading: false,
   bookListData: {
-    booksItems: [],
+    bookItems: [],
     totalItems: 0,
   },
   searchPressed: false,
@@ -45,13 +45,20 @@ interface selectChangedPayload {
 
 export const getBookList = createAsyncThunk<
   BookResponse,
-  number,
+  { startIndex: number; numberOfResults?: number },
   { state: RootState; rejectValue: string }
 >("books/getBookList", async (action, { rejectWithValue, getState }) => {
   try {
     const state = getState()
     const { searchText, sort, filter } = state.books.form
-    const result = await BooksAPI.getBooks(searchText, action, sort, filter)
+    const result = await BooksAPI.getBooks(
+      searchText,
+      action.startIndex,
+      sort,
+      filter,
+      action.numberOfResults
+    )
+    console.log(result.data)
     return result.data
   } catch (err) {
     const error = err as AxiosError
@@ -74,8 +81,8 @@ const booksSlice = createSlice({
     searchTextChanged: (state, action: PayloadAction<string>) => {
       state.form.searchText = action.payload
     },
-    newQuery: state => {
-      state.bookListData.booksItems = []
+    clearBooks: state => {
+      state.bookListData.bookItems = []
     },
   },
   extraReducers: builder => {
@@ -86,7 +93,7 @@ const booksSlice = createSlice({
     builder.addCase(getBookList.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload!
-      state.searchPressed = false
+      state.searchPressed = false // Чтобы появился опять начальный экран
     })
     builder.addCase(getBookList.fulfilled, (state, action) => {
       state.loading = false
@@ -94,17 +101,17 @@ const booksSlice = createSlice({
       const { items, totalItems } = action.payload
       if (items === undefined) {
         state.searchPressed = true
-        state.bookListData.booksItems = []
+        state.bookListData.bookItems = []
         state.bookListData.totalItems = 0
         return
       }
-      if (state.bookListData.booksItems.length !== 0) {
+      if (state.bookListData.bookItems.length !== 0) {
         items.forEach(elem => {
-          state.bookListData.booksItems.push(elem)
+          state.bookListData.bookItems.push(elem)
         })
       } else {
         state.searchPressed = true
-        state.bookListData.booksItems = items
+        state.bookListData.bookItems = items
         state.bookListData.totalItems = totalItems
       }
     })
@@ -113,4 +120,4 @@ const booksSlice = createSlice({
 
 export const booksReducer = booksSlice.reducer
 
-export const { selectChanged, searchTextChanged, newQuery } = booksSlice.actions
+export const { selectChanged, searchTextChanged, clearBooks } = booksSlice.actions

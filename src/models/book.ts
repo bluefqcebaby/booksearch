@@ -1,5 +1,5 @@
 export interface Book {
-  id: string
+  etag: string
   selfLink: string
   volumeInfo: BookInfo
 }
