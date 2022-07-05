@@ -12,7 +12,7 @@ const initialState: booksInterface = {
 }
 
 export const getSingleBook = createAsyncThunk(
-  "books/getSingleBook",
+  "bookPage/getSingleBook",
   async (action: string, { rejectWithValue }) => {
     try {
       const result = await BooksAPI.getSingleBook(action)
@@ -24,8 +24,8 @@ export const getSingleBook = createAsyncThunk(
   }
 )
 
-const booksSlice = createSlice({
-  name: "books",
+const bookPageSlice = createSlice({
+  name: "bookPage",
   initialState,
   reducers: {},
   extraReducers: builder => {
@@ -35,4 +35,4 @@ const booksSlice = createSlice({
   },
 })
 
-export const bookReducer = booksSlice.reducer
+export const bookPageReducer = bookPageSlice.reducer
