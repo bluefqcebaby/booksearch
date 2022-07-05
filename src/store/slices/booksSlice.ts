@@ -61,6 +61,9 @@ export const getBookList = createAsyncThunk<
     return result.data
   } catch (err) {
     const error = err as AxiosError
+    if (error.response?.status === 400) {
+      return rejectWithValue("Wrong query")
+    }
     return rejectWithValue(error.message)
   }
 })

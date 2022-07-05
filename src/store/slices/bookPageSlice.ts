@@ -19,7 +19,8 @@ export const getSingleBook = createAsyncThunk(
       return result.data
     } catch (err) {
       const error = err as AxiosError
-      return rejectWithValue(`ERROR IN getSingleBook >>> ${error.message}`)
+      if (error.response?.status === 503) return rejectWithValue("Cant find this book")
+      return rejectWithValue(`${error.message}`)
     }
   }
 )
