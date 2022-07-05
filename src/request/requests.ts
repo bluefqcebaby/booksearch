@@ -1,6 +1,7 @@
+import { Book } from "../models/book"
 import { CONSTANTS } from "../utils/constants"
 import { BookResponse } from "./../models/booksList"
-import { bookListRequest } from "./instances"
+import { bookListRequest, singleBookRequest } from "./instances"
 
 export const BooksAPI = {
   getBooks(
@@ -14,5 +15,8 @@ export const BooksAPI = {
     return bookListRequest.get<BookResponse>(
       `/?q=${search}${filterText}&startIndex=${startIndex}&maxResults=${numberOfResults}&orderBy=${sort}`
     )
+  },
+  getSingleBook(id: string) {
+    return singleBookRequest.get<Book>(`/${id}`)
   },
 }

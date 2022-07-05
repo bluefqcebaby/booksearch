@@ -1,4 +1,5 @@
 export interface Book {
+  id: string
   etag: string
   selfLink: string
   volumeInfo: BookInfo
@@ -14,4 +15,5 @@ interface BookInfo {
 interface imgLinks {
   smallThumbnail: string
   thumbnail: string
+  extraLarge: string
 }

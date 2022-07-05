@@ -56,7 +56,7 @@ export const Search = () => {
                 <BsSearch color='white' />
               </button>
             </div>
-            <Loader visible={loading} />
+            <Loader visible={loading} color='white' />
             <div className={s.search__form__options}>
               {/** я решил использовать кастомные селекты потому что обычные */}
               {/** нельзя стилизовать, заодно решил показать, что могу такое делать :) */}

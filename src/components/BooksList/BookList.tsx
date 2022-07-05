@@ -54,6 +54,7 @@ export const BookList = () => {
     const bookItems = books.map(elem => (
       <BookItem
         key={elem.etag}
+        id={elem.id}
         title={elem.volumeInfo.title}
         thumbnail={elem.volumeInfo?.imageLinks?.thumbnail ?? bookCover}
         authors={elem.volumeInfo.authors}
