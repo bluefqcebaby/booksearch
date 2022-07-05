@@ -1,6 +1,6 @@
 import s from "./SingleBook.module.scss"
 import { IoArrowBackSharp } from "react-icons/io5"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { Loader } from "../Common/Loader/Loader"
 import { useTypedDispatch, useTypedSelector } from "../../store/store"
@@ -10,14 +10,13 @@ import { getSingleBook } from "../../store/slices/bookPageSlice"
 import parse from "html-react-parser"
 
 export const SingleBook = () => {
-  const { book } = useTypedSelector(state => state.book)
+  const { book } = useTypedSelector(state => state.bookPage)
   const dispatcher = useTypedDispatch()
   const { id } = useParams()
-  const [loading, setLoading] = useState(false)
-  const redirect = useNavigate()
+  const [loading, setLoading] = useState(true)
+  console.log(id)
   useEffect(() => {
     ;(async () => {
-      setLoading(true)
       await dispatcher(getSingleBook(id!))
         .unwrap()
         .catch(err => console.log(err))
@@ -33,7 +32,7 @@ export const SingleBook = () => {
           ) : (
             <>
               <figure className={s.singleBook__img__block}>
-                <img src={book.volumeInfo.imageLinks?.thumbnail ?? bookImg} alt='book' />
+                <img src={book.volumeInfo?.imageLinks?.thumbnail ?? bookImg} alt='book' />
               </figure>
               <div className={s.singleBook__info}>
                 <p className={s.singleBook__categories}>
@@ -49,9 +48,11 @@ export const SingleBook = () => {
                     : parse(book.volumeInfo.description)}
                 </p>
               </div>
-              <button className={s.singleBook__back} onClick={() => redirect("/")}>
-                <IoArrowBackSharp /> Back to the list
-              </button>
+              <Link to={"/"}>
+                <button className={s.singleBook__back}>
+                  <IoArrowBackSharp /> Back to the list
+                </button>
+              </Link>
             </>
           )}
         </div>

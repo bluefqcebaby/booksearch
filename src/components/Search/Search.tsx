@@ -32,7 +32,6 @@ export const Search = () => {
       .unwrap()
       .catch(err => console.log(err))
   }
-
   const searchTyping = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     dispatcher(searchTextChanged(value))
