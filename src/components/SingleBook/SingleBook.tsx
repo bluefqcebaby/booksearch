@@ -1,13 +1,13 @@
-import s from "./SingleBook.module.scss"
-import { IoArrowBackSharp } from "react-icons/io5"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import parse from "html-react-parser"
 import { useEffect, useState } from "react"
-import { Loader } from "../Common/Loader/Loader"
-import { useTypedDispatch, useTypedSelector } from "../../store/store"
-import { format } from "../../utils/formatAuthors"
+import { IoArrowBackSharp } from "react-icons/io5"
+import { useNavigate, useParams } from "react-router-dom"
 import bookImg from "../../img/bookCover.jpg"
 import { getSingleBook } from "../../store/slices/bookPageSlice"
-import parse from "html-react-parser"
+import { useTypedDispatch, useTypedSelector } from "../../store/store"
+import { format } from "../../utils/formatAuthors"
+import { Loader } from "../Common/Loader/Loader"
+import s from "./SingleBook.module.scss"
 
 export const SingleBook = () => {
   const { book } = useTypedSelector(state => state.bookPage)
@@ -23,6 +23,7 @@ export const SingleBook = () => {
       setLoading(false)
     })()
   }, [])
+  const redirect = useNavigate()
   return (
     <article className={s.singleBook}>
       <div className='container'>
@@ -48,11 +49,9 @@ export const SingleBook = () => {
                     : parse(book.volumeInfo.description)}
                 </p>
               </div>
-              <Link to={"/"}>
-                <button className={s.singleBook__back}>
-                  <IoArrowBackSharp /> Back to the list
-                </button>
-              </Link>
+              <button className={s.singleBook__back} onClick={() => redirect(-1)}>
+                <IoArrowBackSharp /> Back to the list
+              </button>
             </>
           )}
         </div>

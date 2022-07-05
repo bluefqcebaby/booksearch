@@ -58,7 +58,6 @@ export const getBookList = createAsyncThunk<
       filter,
       action.numberOfResults
     )
-    console.log(result.data)
     return result.data
   } catch (err) {
     const error = err as AxiosError
@@ -101,7 +100,6 @@ const booksSlice = createSlice({
       const { items, totalItems } = action.payload
       if (items === undefined) {
         state.searchPressed = true
-        state.bookListData.bookItems = []
         state.bookListData.totalItems = 0
         return
       }
