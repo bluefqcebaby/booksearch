@@ -82,6 +82,7 @@ const booksSlice = createSlice({
     },
     clearBooks: state => {
       state.bookListData.bookItems = []
+      state.bookListData.totalItems = 0
     },
   },
   extraReducers: builder => {
@@ -100,7 +101,6 @@ const booksSlice = createSlice({
       const { items, totalItems } = action.payload
       if (items === undefined) {
         state.searchPressed = true
-        state.bookListData.totalItems = 0
         return
       }
       if (state.bookListData.bookItems.length !== 0) {
