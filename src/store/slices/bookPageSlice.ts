@@ -16,7 +16,7 @@ export const getSingleBook = createAsyncThunk(
   async (action: string, { rejectWithValue }) => {
     try {
       const result = await BooksAPI.getSingleBook(action)
-      return console.log(result.data), result.data
+      return result.data
     } catch (err) {
       const error = err as AxiosError
       return rejectWithValue(`ERROR IN getSingleBook >>> ${error.message}`)
